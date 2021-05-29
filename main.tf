@@ -8,7 +8,7 @@ resource "aws_instance" "web" {
   key_name                      = var.key_name
   vpc_security_group_ids        = ["${aws_security_group.instance.id}"]
   source_dest_check             = false
-  instance_type = "t2.micro"
+  instance_type = var.instance_type
   tags = {
     Name = "${format("webapp-%03d", count.index + 1)}"
   }
@@ -39,7 +39,7 @@ resource "aws_security_group" "instance" {
 ## Creating Launch Configuration
 resource "aws_launch_configuration" "sbk" {
   image_id               = var.ami_version
-  instance_type          = "t2.micro"
+  instance_type          = var.instance_type
   security_groups        = ["${aws_security_group.instance.id}"]
   key_name               = var.key_name
   user_data= <<-EOF
