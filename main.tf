@@ -42,16 +42,7 @@ resource "aws_launch_configuration" "sbk" {
   instance_type          = var.instance_type
   security_groups        = ["${aws_security_group.instance.id}"]
   key_name               = var.key_name
-  user_data= <<-EOF
-             #!/bin/bash
-              yum install httpd -y
-              echo "hey i am $(hostname -f)" > /var/www/html/index.html
-              service httpd start
-              chkconfig httpd on
-EOF
- lifecycle {
-    create_before_destroy = true
-  }
+  user_data              = "${file("install_httpd.sh")}"
 }
 resource "aws_default_vpc" "default" {
   tags = {
