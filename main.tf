@@ -38,7 +38,7 @@ resource "aws_security_group" "instance" {
 }
 ## Creating Launch Configuration
 resource "aws_launch_configuration" "sbk" {
-  image_id               = var.amiid
+  image_id               = var.ami_version
   instance_type          = "t2.micro"
   security_groups        = ["${aws_security_group.instance.id}"]
   key_name               = var.key_name
